@@ -1,5 +1,4 @@
-# Write a POSIX /bin/sh compatible uninstaller to avoid Bash-specific syntax errors
-script = r"""#!/bin/sh
+#!/bin/sh
 # overleaf-uninstall-posix.sh
 # POSIX-compatible uninstaller for Overleaf CE.
 # - Stops/removes the current Overleaf CE compose stack
@@ -32,14 +31,14 @@ if [ -n "$VERSION" ]; then
 fi
 
 echo "This will:"
-echo "  o Stop and remove Overleaf CE containers"
-echo "  o Remove compose volumes for this instance (Mongo/Redis data)"
+echo "  • Stop and remove Overleaf CE containers"
+echo "  • Remove compose volumes for this instance (Mongo/Redis data)"
 if [ -n "$IMAGE_TAG" ]; then
-  echo "  o Remove the committed image tag ($IMAGE_TAG) if present"
+  echo "  • Remove the committed image tag ($IMAGE_TAG) if present"
 else
-  echo "  o Remove the committed image tag (<none>) if present"
+  echo "  • Remove the committed image tag (<none>) if present"
 fi
-echo "  o Optionally delete $OVERLEAF_DIR"
+echo "  • Optionally delete $OVERLEAF_DIR"
 printf "Type DELETE to continue: "
 read ANS
 if [ "$ANS" != "DELETE" ]; then
@@ -89,12 +88,4 @@ case "$DELDIR" in
     ;;
 esac
 
-echo "? Purge complete."
-"""
-from pathlib import Path
-p = Path("/mnt/data/overleaf-uninstall-posix.sh")
-p.write_text(script)
-import os, stat
-os.chmod(str(p), stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR | stat.S_IRGRP | stat.S_IXGRP | stat.S_IROTH | stat.S_IXOTH)
-print("Saved to", str(p))
-
+echo "✅ Purge complete."
